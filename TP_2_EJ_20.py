@@ -77,7 +77,7 @@ def mostrar_pila(pila, titulo):
  
     while not pila_vacia(pila):
         pasos, direccion = desapilar(pila)
-        print(f"  Paso {paso_num}: {pasos} pasos al {direccion}")
+        print(f"Paso {paso_num}: {pasos} pasos al {direccion}")
         apilar(aux, (pasos, direccion))
         paso_num += 1
  
