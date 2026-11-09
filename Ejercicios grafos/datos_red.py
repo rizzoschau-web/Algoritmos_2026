@@ -1,0 +1,38 @@
+"""Equipos y conexiones de la figura. Cada arista se carga una sola vez."""
+equipos = [
+    ('Debian', 'notebook'),
+    ('Ubuntu', 'pc'),
+    ('Impresora', 'impresora'),
+    ('Mint', 'pc'),
+    ('Switch 1', 'switch'),
+    ('Router 1', 'router'),
+    ('Router 2', 'router'),
+    ('Router 3', 'router'),
+    ('Red Hat', 'notebook'),
+    ('Guaraní', 'servidor'),
+    ('Manjaro', 'pc'),
+    ('Parrot', 'notebook'),
+    ('Switch 2', 'switch'),
+    ('Fedora', 'pc'),
+    ('Arch', 'notebook'),
+    ('MongoDB', 'servidor'),
+]
+
+conexiones = [
+    ('Debian', 'Switch 1', 17),
+    ('Ubuntu', 'Switch 1', 18),
+    ('Impresora', 'Switch 1', 22),
+    ('Mint', 'Switch 1', 80),
+    ('Switch 1', 'Router 1', 29),
+    ('Router 1', 'Router 2', 37),
+    ('Router 1', 'Router 3', 43),
+    ('Router 2', 'Red Hat', 25),
+    ('Router 2', 'Guaraní', 9),
+    ('Router 2', 'Router 3', 50),
+    ('Router 3', 'Switch 2', 61),
+    ('Manjaro', 'Switch 2', 40),
+    ('Parrot', 'Switch 2', 12),
+    ('Fedora', 'Switch 2', 3),
+    ('Arch', 'Switch 2', 56),
+    ('MongoDB', 'Switch 2', 5),
+]
