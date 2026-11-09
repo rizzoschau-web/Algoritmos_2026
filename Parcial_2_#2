@@ -1,0 +1,72 @@
+# Parcial 2, Ejercicio 2, Algoritmos, Walter Bel
+
+from graph import Graph
+from star_wars_data import personajes
+
+g = Graph(is_dir=False)
+
+for personaje in personajes:
+    g.add_vertex(personaje['nombre'], personaje)
+
+# 1. Cada vértice debe almacenar el nombre de un personaje, las aristas representan la cantidad de episodios en los que aparecieron juntos ambos personajes que se relacionan;
+for i in range(len(personajes)):
+    for j in range(i + 1, len(personajes)):
+        compartidos = 0
+        for episodio in personajes[i]['episodios']:
+            if episodio in personajes[j]['episodios']:
+                compartidos += 1
+        if compartidos > 0:
+            g.add_edge(compartidos, personajes[i]['nombre'], personajes[j]['nombre'])
+
+# 2. Hallar el árbol de expansión mínimo desde el vértice que contiene a: C-3PO, Yoda y Leia;
+print('\n--- B) Árbol de expansión mínimo ---')
+for origen in ['C3PO', 'Yoda', 'Leia']:
+    min_tree = g.kruskal(origen)
+    print(f'\ndesde {origen}:')
+    peso_total = 0
+    for edge in min_tree.split(';'):
+        origin, destination, weight = edge.split('-')
+        print(f'origin {origin} destination {destination}')
+        peso_total += int(weight)
+    print(f'peso total: {peso_total}')
+
+# 3. Determinar cuál es el número máximo de episodio que comparten dos personajes, e indicar todos los pares de personajes que coinciden con dicho número;
+print('\n--- C) Máximo de episodios compartidos ---')
+maximo = 0
+for vertex in g:
+    for edge in vertex.edges:
+        if edge.weight > maximo:
+            maximo = edge.weight
+print(f'máximo: {maximo}')
+for vertex in g:
+    for edge in vertex.edges:
+        if edge.weight == maximo and vertex.value < edge.destination:
+            print(f'{vertex.value} y {edge.destination}')
+
+
+# 4. XCalcule el camino mas ccorto desde: C-3PO a R2-D2 y desde Yoda a Darth Vader;
+def camino_mas_corto(origen, destino):
+    if g.exist_path(origen, destino):
+        paths = g.dijkstra(origen)
+        peso_total = None
+        camino_completo = []
+        while paths.size() > 0:
+            value = paths.pop()
+            if value[0] == destino:
+                if peso_total is None:
+                    peso_total = value[1]
+                camino_completo.append(value[0])
+                destino = value[2]
+        camino_completo.reverse()
+        print(f'el camino mas corto es: {" -> ".join(camino_completo)} con un costo de {peso_total}')
+
+
+print('\n--- E) Camino más corto ---')
+camino_mas_corto('C3PO', 'R2D2')
+camino_mas_corto('Yoda', 'Darth Vader')
+
+# 5. Indicar qué personajes aparecieron en los nueve episodios de la saga.
+print('\n--- F) Personajes en los nueve episodios ---')
+for vertex in g:
+    if len(vertex.other_values['episodios']) == 9:
+        print(vertex.value)
